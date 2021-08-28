@@ -1,0 +1,254 @@
+[
+  {
+    "id": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+    "type": "request",
+    "inPorts": [],
+    "outPorts": [
+      {
+        "id": "94515a5c-bb32-492a-a080-299b481bb0ec",
+        "in": false,
+        "type": "exec",
+        "name": "OutExec",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "8aeb96bb-0e12-473c-aa20-4adb05ce0fc3"
+          }
+        ]
+      },
+      {
+        "id": "ce76871f-610b-488c-82fa-1bda7263dd24",
+        "in": false,
+        "type": "string",
+        "name": "FlowName",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "0846d059-96b4-462a-9bbb-7fd3e3236294"
+          }
+        ]
+      },
+      {
+        "id": "3de14212-291c-4b22-9076-15792d31c52a",
+        "in": false,
+        "type": "headers",
+        "name": "Headers",
+        "links": []
+      },
+      {
+        "id": "c267d924-9639-4a6b-b457-ed2f106ed21e",
+        "in": false,
+        "type": "uuid",
+        "name": "UserId",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "d834e945-1ffb-4d7d-8d37-7186cab5cd09"
+          }
+        ]
+      },
+      {
+        "id": "4475a53c-7c82-45f9-8109-179387d30757",
+        "in": false,
+        "type": "stringList",
+        "name": "UserRoles",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "caf585e0-40bf-4bf9-9343-4108e71d0e7b"
+          }
+        ]
+      },
+      {
+        "id": "69c678ec-2740-45cd-b6e0-4a6ea6291fd5",
+        "in": false,
+        "type": "json",
+        "name": "RequestData",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "1550490c-5b37-42ed-94e7-6aa10e306a3c"
+          }
+        ]
+      },
+      {
+        "id": "5c5e7eca-79fe-4290-b241-43823ad0ffdc",
+        "in": false,
+        "type": "int",
+        "name": "PageNum",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "e49296b7-762b-47a6-a483-957c7cbe48aa"
+          }
+        ]
+      },
+      {
+        "id": "baf15ddf-6ed6-415c-bfbc-c0ae6d83195f",
+        "in": false,
+        "type": "int",
+        "name": "PageSize",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "631ca407-f781-467a-9152-5863dbebb0f6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1bf5e782-4422-4cb2-9f01-6b2d83978e88",
+    "type": "responseJsonList",
+    "inPorts": [
+      {
+        "id": "c7ad06c1-add4-4fd9-a179-44bbc7ca113e",
+        "in": true,
+        "type": "exec",
+        "name": "InExec",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "6fdc8b47-beb1-481f-b6ee-b02751dea306"
+          }
+        ]
+      },
+      {
+        "id": "2b393802-25f2-42b3-9ce5-8eca9bbe1c20",
+        "in": true,
+        "type": "int",
+        "name": "HttpStatus",
+        "links": []
+      },
+      {
+        "id": "73220bcc-9a6b-496c-9409-5711158bb26d",
+        "in": true,
+        "type": "jsonList",
+        "name": "Body",
+        "links": [
+          {
+            "node": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+            "port": "bbfee73c-ebf2-4b7f-8763-e12d0b4746c8"
+          }
+        ]
+      }
+    ],
+    "outPorts": []
+  },
+  {
+    "id": "d3ba8618-a1fd-4af6-ba12-fd89b095e0f5",
+    "type": "getFlatData",
+    "inPorts": [
+      {
+        "id": "8aeb96bb-0e12-473c-aa20-4adb05ce0fc3",
+        "in": true,
+        "type": "exec",
+        "name": "InExec",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "94515a5c-bb32-492a-a080-299b481bb0ec"
+          }
+        ]
+      },
+      {
+        "id": "0846d059-96b4-462a-9bbb-7fd3e3236294",
+        "in": true,
+        "type": "string",
+        "name": "ConfigName",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "ce76871f-610b-488c-82fa-1bda7263dd24"
+          }
+        ]
+      },
+      {
+        "id": "d834e945-1ffb-4d7d-8d37-7186cab5cd09",
+        "in": true,
+        "type": "uuid",
+        "name": "UserId",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "c267d924-9639-4a6b-b457-ed2f106ed21e"
+          }
+        ]
+      },
+      {
+        "id": "caf585e0-40bf-4bf9-9343-4108e71d0e7b",
+        "in": true,
+        "type": "stringList",
+        "name": "UserRoles",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "4475a53c-7c82-45f9-8109-179387d30757"
+          }
+        ]
+      },
+      {
+        "id": "1550490c-5b37-42ed-94e7-6aa10e306a3c",
+        "in": true,
+        "type": "json",
+        "name": "Data",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "69c678ec-2740-45cd-b6e0-4a6ea6291fd5"
+          }
+        ]
+      },
+      {
+        "id": "e49296b7-762b-47a6-a483-957c7cbe48aa",
+        "in": true,
+        "type": "int",
+        "name": "PageNum",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "5c5e7eca-79fe-4290-b241-43823ad0ffdc"
+          }
+        ]
+      },
+      {
+        "id": "631ca407-f781-467a-9152-5863dbebb0f6",
+        "in": true,
+        "type": "int",
+        "name": "PageSize",
+        "links": [
+          {
+            "node": "b71835be-f7ec-4de5-9594-56d5ab57d8f8",
+            "port": "baf15ddf-6ed6-415c-bfbc-c0ae6d83195f"
+          }
+        ]
+      }
+    ],
+    "outPorts": [
+      {
+        "id": "6fdc8b47-beb1-481f-b6ee-b02751dea306",
+        "in": false,
+        "type": "exec",
+        "name": "OutExec",
+        "links": [
+          {
+            "node": "1bf5e782-4422-4cb2-9f01-6b2d83978e88",
+            "port": "c7ad06c1-add4-4fd9-a179-44bbc7ca113e"
+          }
+        ]
+      },
+      {
+        "id": "bbfee73c-ebf2-4b7f-8763-e12d0b4746c8",
+        "in": false,
+        "type": "jsonList",
+        "name": "ReturnData",
+        "links": [
+          {
+            "node": "1bf5e782-4422-4cb2-9f01-6b2d83978e88",
+            "port": "73220bcc-9a6b-496c-9409-5711158bb26d"
+          }
+        ]
+      }
+    ]
+  }
+]

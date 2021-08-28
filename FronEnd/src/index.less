@@ -1,0 +1,85 @@
+@import '~antd/dist/antd';
+//@import '~antd/dist/antd.dark.less';
+
+//@import '~mobile-inspections-base-ui/dist/index';
+@import '~rt-design/dist/index';
+
+@import "constants/variables";
+@import "components/Login/Login";
+@import "components/App/App";
+@import "components/Base/EditableTable/EditableTable";
+
+@import 'components/App/Main/Configs/Query/Query';
+@import 'components/App/Main/Configs/Query/Tabs/Preview';
+@import 'components/App/Main/Configs/Save/SaveForm';
+@import 'components/App/Main/Configs/Flow/Flow';
+@import 'components/App/Main/Ssh/Ssh';
+@import 'components/App/Main/Jira/Jira';
+
+//@import 'components/App/App';
+//@import 'components/Menu/Menu';
+//@import 'components/Configurations/depricated/Get/GetForm';
+//@import 'components/Configurations/depricated/Save/SaveForm';
+//@import "components/Documentation/Documentation";
+//@import 'components/Monitoring/Logging/Logging';
+//@import 'components/Playground/Playground';
+//
+//@import 'components/Configurations/Get/GetConfigurations';
+
+#root {
+	height: 100vh;
+}
+
+.context-menu {
+	.anticon{
+		margin: 0 4px 0 0;
+	}
+}
+
+.anticon-folder{
+	// color: rgb(24, 117, 146);
+	color: #62afd0; // rgb(152, 212, 238);62afd0
+}
+.anticon-table, .anticon-column, .anticon-save{
+	color: #939da6;
+}
+
+svg:not(:root) {
+	overflow: visible;
+}
+
+.SplitPane {
+	position: static !important;
+	display: flex;
+	.Pane {
+		display: flex;
+		overflow-x: hidden;
+	}
+	.Resizer.vertical {
+
+		width: 8px;
+		background: transparent;
+		&:hover {
+			cursor: col-resize;
+		}
+		&.disabled {
+			cursor: default;
+		}
+	}
+}
+
+.mb-0 {
+	margin-bottom: 0px;
+}
+
+.mb-8 {
+	margin-bottom: 8px;
+}
+
+.mr-8 {
+	margin-right: 8px;
+}
+
+.ant-menu-sub.ant-menu-inline {
+	background-color: transparent;
+}

@@ -1,0 +1,135 @@
+@flow-editor-white: #e3e3e3;// rgb(227, 227, 227);
+
+.type-color (@color) {
+    svg {
+        color: @color;
+        fill: transparent;
+    }
+    &.fill svg{ fill: @color; }
+    &:hover svg { fill: @color; }
+}
+.tree-size () {
+    .ant-tree-switcher,
+    .ant-tree-node-content-wrapper .ant-tree-iconEle,
+    .ant-tree-node-content-wrapper{
+        min-height: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+}
+
+.flow-editor {
+    display: flex;
+    height: 100%;
+
+    &-left-side {
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        &-header {
+            padding: 4px;
+            //border-bottom: 2px solid rgb(240, 240, 240);
+        }
+        &-divide-title {
+            //background: #c8dcf7;
+            //color: @flow-editor-white;
+            padding: 0 4px;
+            //font-size: 13px;
+            border-bottom: 2px solid rgb(240, 240, 240);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        &-fields {
+            padding: 4px;
+            //margin-right: 8px;
+        }
+        &-vars {
+            overflow: auto;
+            max-height: 30%;
+            min-height: 100px;
+            //border-bottom: 2px solid rgb(240, 240, 240);
+            .tree-size()
+        }
+        &-nodes {
+            overflow: auto;
+            .tree-size()
+        }
+    }
+
+    &-canvas {
+        //margin-top: 8px;
+        flex: auto;
+        background-color: rgb(46, 46, 46);
+        .port {
+            color: @flow-editor-white;
+            width: 16px;
+            height: 16px;
+            svg { fill: transparent; }
+            &-exec { .type-color(@flow-editor-white); }
+            &-var.bool { .type-color(#920002); }
+            &-var.byte { .type-color(#026c65); }
+            &-var.int { .type-color(#1ee0a9); }
+            &-var.int64 { .type-color(#a8e0ac); }
+            &-var.float { .type-color(#9dfb43); }
+            &-var.name { .type-color(#ca7df5); }
+            &-var.uuid { .type-color(#95207e); }
+            &-var.string { .type-color(#fc00cf); }
+            &-var.stringList { .type-color(#fc00cf); }
+            &-var.text { .type-color(#e677a5); }
+            &-var.headers { .type-color(#fdc729); }
+            &-var.json { .type-color(#9aaefb); }
+            &-var.jsonList { .type-color(#9aaefb); }
+            &-var.object { .type-color(#04a4ee); }
+        }
+
+        .node {
+            color: @flow-editor-white;
+            border-radius: 10px;
+            background-color: rgba(32, 32, 32, 0.50);
+            &-wrapper {
+                overflow: hidden;
+                border-radius: 10px;
+                border: 1px solid #606060;
+            }
+            &-header {
+                //height: 25px;
+                padding: 4px 8px;
+                background-color: rgb(70, 70, 70); //rgba(81, 81, 81, 0.80);
+                //background: linear-gradient(to left, @flow-editor-white, rgba(62, 62, 62, 0.80));
+                //border-radius: 10px;
+                //border: 1px solid black;
+            }
+            &-body {
+                display: flex;
+                justify-content: space-between;
+                //background-color: rgba(32, 32, 32, 0.80);
+                width: 100%;
+                height: 100%;
+                padding: 8px 8px 4px 8px;
+                //border-radius: 0 0 10px 10px;
+                //border: 0 solid black;
+                .node-ports-in,
+                .node-ports-out{
+                    display: flex;
+                    flex-direction: column;
+                    .port-wrapper{
+                        height: 25px;
+                        margin-bottom: 4px;
+                    }
+                }
+                .node-ports-in{ align-items: flex-start; margin-right: 16px;}
+                .node-ports-out{ align-items: flex-end}
+
+            }
+
+            &-selected {
+                border-color: rgb(231, 170, 0);//red;
+            }
+
+            &-branch {
+                min-width: 175px;
+            }
+        }
+    }
+}

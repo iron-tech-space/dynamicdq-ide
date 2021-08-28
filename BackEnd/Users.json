@@ -1,0 +1,16 @@
+{
+  "admin" : {
+    "password" : "$2a$10$5nejEEuhrVuKo74mSQb0e.LD3vj3RQhaq3m4s.7ASL6G9YayFZ4iC",
+    "username" : "admin",
+    "authorities" : [ {
+      "authority" : "ROLE_ADMIN"
+    }, {
+      "authority" : "ROLE_USER"
+    } ],
+    "accountNonExpired" : true,
+    "accountNonLocked" : true,
+    "credentialsNonExpired" : true,
+    "enabled" : true,
+    "id" : "0be7f31d-3320-43db-91a5-3c44c99329ab"
+  }
+}

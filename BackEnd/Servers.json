@@ -1,0 +1,43 @@
+{
+  "MI_DEV_121.117" : {
+    "ip" : "10.5.121.117",
+    "port" : 22,
+    "username" : "root",
+    "password" : "........",
+    "readOnly": false,
+    "position": 0,
+    "commands": [
+      {
+        "name": "Выводит список файлов",
+        "command": "ls"
+      }
+    ]
+  },
+  "MI_DEMO_31.117" : {
+    "ip" : "10.5.31.117",
+    "port" : 22,
+    "username" : "root",
+    "password" : "........",
+    "readOnly": false,
+    "position": 1,
+    "commands": []
+  },
+  "ASSD_DEV_31.73" : {
+    "ip" : "10.5.31.73",
+    "port" : 22,
+    "username" : "root",
+    "password" : "12345678",
+    "readOnly": false,
+    "position": 3,
+    "commands": []
+  },
+  "ASSD_PROD_121.80:3422" : {
+    "ip" : "10.5.121.80",
+    "port" : 3422,
+    "username" : "root",
+    "password" : "20lupmoc@",
+    "readOnly": false,
+    "position": 4,
+    "commands": []
+  }
+}

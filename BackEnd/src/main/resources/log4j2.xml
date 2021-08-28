@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Properties>
+        <!-- <Property name="APP_NAME">$${sys:application.name:-spring-app}</Property> -->
+        <Property name="APP_NAME">\${spring:spring.application.name:-spring-app}</Property>
+        <Property name="LOGS">\${sys:logs.location:-./log}</Property>
+        <Property name="LOG_PATTERN">%d{DEFAULT} %highlight{%6p}{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=cyan, TRACE=cyan} [%15.15t] %style{%-50.50logger{-1}}{cyan} : %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="File"
+            fileName="${LOGS}/${APP_NAME}.log"
+            filePattern="${LOGS}/archived/${APP_NAME}-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1"/>
+        </RollingFile>
+       <JMS name="ActiveMQ"
+            destinationBindingName="loggingQueue"
+            factoryName="org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+            factoryBindingName="ConnectionFactory"
+            providerURL="tcp://10.5.121.117:61616"
+            userName="admin"
+            password="your_password">
+           <JsonLayout properties="true"/>
+       </JMS>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.irontechspace.dynamicdq.executor.query.QueryService" additivity="false" level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="com.irontechspace.dynamicdq.configurator.query.QueryConfigRepository" additivity="false" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.irontechspace.dynamicdq.executor.save.SaveService" additivity="false" level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <!-- <AppenderRef ref="ActiveMQ"/> com.airtech.dynamicdq.service.MonitoringService-->
+        </Root>
+    </Loggers>
+</Configuration>

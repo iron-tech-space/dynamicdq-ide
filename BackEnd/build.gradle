@@ -1,0 +1,76 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.5.RELEASE'
+		springCloudVersion = "2.2.2.RELEASE"
+		springRetryVersion = "1.2.5.RELEASE"
+		lombokVersion = '1.18.12'
+		swaggerVersion = '2.9.2'
+		log4j2version = '2.13.1'
+
+		appVersion = "1.0."
+		buildNumber = (System.getenv("BUILD_NUMBER")?.toString()?.toInteger() ?: 0)
+		appName = (System.getenv("JAR_NAME")?.toString()?.toString() ?: 'ddqide.jar')
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.mobinspect'
+version appVersion + buildNumber
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+bootJar { archiveName = appName }
+
+task bootJarCustom (type: Copy, dependsOn:bootJar){
+	from "build/libs"
+	into "./build"
+	include (appName)
+}
+configure(bootJarCustom) {
+	group = BasePlugin.BUILD_GROUP
+	description = 'Assembles bootJar task and copy wars to build directory of root project'
+}
+
+configurations.all {
+	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	exclude group: "org.springframework.cloud", module: "spring-cloud-bus"
+	exclude group: "ch.qos.logback", module: "logback-classic"
+}
+
+dependencies {
+	springBoot { buildInfo() }
+	compile project(":spring-dynamicdq-lib")
+//	implementation ('com.irontechspace:spring-dynamicdq-lib:0.0.32')
+//	implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
+
+	// Для логов по ссылке
+	compile "org.apache.logging.log4j:log4j-api:${log4j2version}"
+	compile "org.apache.logging.log4j:log4j-core:${log4j2version}"
+//	compile "org.apache.logging.log4j:log4j-spring-cloud-config-client:${log4j2version}"
+
+	compile("org.projectlombok:lombok:${lombokVersion}")
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-data-jdbc:${springBootVersion}")
+
+	compile("org.apache.sshd:sshd-core:2.7.0")
+
+	// Logs env
+	println("BUILD_NUMBER 	[${System.getenv("BUILD_NUMBER")?.toString()}]")
+	println("JAR_NAME 		[${System.getenv("JAR_NAME")?.toString()}]")
+	println("WITH_AUTH 		[${System.getenv("WITH_AUTH")?.toString()}]")
+}

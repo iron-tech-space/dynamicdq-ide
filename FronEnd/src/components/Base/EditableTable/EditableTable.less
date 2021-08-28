@@ -1,0 +1,192 @@
+
+// text null
+@editable-table-border-width: 1px;
+@editable-table-border-style: solid;
+@editable-table-border-color: rgb(229, 229, 229); //#f0f0f0; 240
+
+@editable-table-row-selected-bg: rgb(254, 250, 225);
+@editable-table-cell-selected-bg: rgb(94, 116, 172);
+
+@editable-table-cell-padding: 2px 4px;
+
+.editable-table{
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  width: 100%;
+  background: transparent;
+
+  &-thead {
+    > tr > th {
+      color: rgba(0,0,0,.85);
+      font-weight: 500;
+      text-align: left;
+      background: #fafafa;
+    }
+  }
+
+  &-header,
+  &-body {
+    border-width: @editable-table-border-width;
+    border-style: @editable-table-border-style;
+    border-color: @editable-table-border-color;
+  }
+
+  &-header {
+    overflow: hidden;
+    //border-bottom: none;
+  }
+
+  &-body {
+    position: relative;
+    border-top: none;
+    overflow: auto;
+    height: 100%;
+  }
+
+  &-row {
+    //height: 25px;
+    //border-width: @editable-table-border-width 0;
+    //border-style: @editable-table-border-style;
+    //border-color: @editable-table-border-color;
+    &:first-child { border-top: none; }
+    //&:last-child { border-bottom: none; }
+    //margin: -1px 0;
+    //padding: 4px 8px;
+    &-selected{
+      //background: #bae7ff; // 94 116 172 // 254 250 225
+      background: @editable-table-row-selected-bg;
+      .editable-table-cell{
+        &-fix-left{
+          background: @editable-table-row-selected-bg;
+        }
+        &-selected {
+          background: @editable-table-cell-selected-bg;
+          color: white;
+        }
+        &-editing {
+          background: white;
+          border: 1px solid #bae7ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+          z-index: 2;
+          position: sticky;
+        }
+      }
+    }
+  }
+
+  &-cell {
+    user-select: none;
+    font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+    cursor: default;
+    position: relative;
+    border-width: 0 @editable-table-border-width @editable-table-border-width 0;
+    border-style: @editable-table-border-style;
+    border-color: @editable-table-border-color;
+    padding: 0;
+
+    .column-resizer{
+      width: 3px;
+      visibility: hidden;
+      background-color: #cccccc;
+      user-select: none;
+      touch-action: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      cursor: col-resize;
+    }
+
+    &:hover .column-resizer {
+      visibility: visible;
+      opacity: 0.5;
+    }
+
+    > div.text,
+    > div.null-text{
+      // ellipsis
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+      :focus {
+        outline: none;
+      }
+    }
+
+    &:last-child {
+      border-width: 0 0 @editable-table-border-width 0;
+    }
+
+    &-fix-left {
+      position: sticky;
+      background: #fff;
+      z-index: 1;
+      &-last::after {
+        box-shadow: inset 10px 0 8px -8px #00000026;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: -1px;
+        width: 30px;
+        transform: translateX(100%);
+        transition: box-shadow .3s;
+        content: "";
+        pointer-events: none;
+      }
+    }
+
+    &-index {
+      cursor: grab;
+      background: #fafafa;
+    }
+
+    &-selected {
+      background: @editable-table-cell-selected-bg;
+      color: white;
+    }
+
+    &-editing {
+      background: white;
+      border: 1px solid #bae7ff;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      z-index: 2;
+      position: relative;
+    }
+
+    .title,
+    .text,
+    .null-text,
+    .ant-input {
+      padding: @editable-table-cell-padding;
+    }
+    .text.ant-input,
+    .null-text.ant-input {
+      background: inherit;
+      color: inherit;
+      text-align: inherit;
+      user-select: none;
+      touch-action: none;
+      cursor: default;
+      caret-color: transparent;
+    }
+    .null-text.ant-input{
+      color: #c1c1c1;
+      font-style: italic;
+    }
+
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+      padding: 0 3px;
+    }
+
+    &.cell-align-center {
+      text-align: center;
+      justify-content: center;
+    }
+    &.cell-align-right {
+      text-align: right;
+      justify-content: end;
+    }
+  }
+}

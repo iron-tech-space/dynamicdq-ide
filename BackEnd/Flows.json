@@ -1,0 +1,32 @@
+{
+  "00": {
+    "type" : "variable",
+    "out": {
+      "value": false
+    }
+  },
+  "0" : {
+    "type" : "if",
+    "in": {
+      "condition" : "00"
+    },
+    "out": {
+      "true" : "1",
+      "false" : "2"
+    }
+  },
+  "1" : {
+    "type" : "log",
+    "in": {
+      "String" : "True log"
+    },
+    "out": null
+  },
+  "2" : {
+    "type" : "log",
+    "in": {
+      "String" : "False log"
+    },
+    "out": null
+  }
+}

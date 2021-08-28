@@ -1,0 +1,50 @@
+.gradle
+.directories
+.build/tmp
+*/build/
+*/bin/
+/out/
+/bin/
+!gradle/wrapper/gradle-wrapper.jar
+.war
+.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Log files ###
+*.log
+
+# Compiled source #
+###################
+*.class
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+/build/
+
+### VS Code ###
+.vscode/

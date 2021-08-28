@@ -1,0 +1,30 @@
+{
+  "MI_DEV_121.117" : {
+    "url" : "jdbc:postgresql://main.db.local:5432/main",
+    "username" : "postgres",
+    "password" : "postgres",
+    "readOnly": false,
+    "position": 0
+  },
+  "MI_DEMO_31.117" : {
+    "url" : "jdbc:postgresql://10.5.31.117:5432/main",
+    "username" : "postgres",
+    "password" : "postgres",
+    "readOnly": true,
+    "position": 1
+  },
+  "ASSD_DEV_31.73" : {
+    "url" : "jdbc:postgresql://10.5.31.73:5432/main",
+    "username" : "postgres",
+    "password" : "postgres",
+    "readOnly": false,
+    "position": 3
+  },
+  "ASSD_PROD_121.80:3432" : {
+    "url" : "jdbc:postgresql://10.5.121.80:3432/main",
+    "username" : "postgres",
+    "password" : "m0ekPostgres",
+    "readOnly": true,
+    "position": 4
+  }
+}

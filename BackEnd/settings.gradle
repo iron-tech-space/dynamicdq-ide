@@ -1,0 +1,17 @@
+rootProject.name = 'dynamicdq-api'
+
+sourceControl {
+//    gitRepository("https://github.com/iron-tech-space/spring-dynamicdq-lib.git") {
+//        producesModule("com.irontechspace:spring-dynamicdq-lib")
+//    }
+    gitRepository("https://atlassian.dias-dev.ru/bitbucket/scm/common/auth-api.git") {
+        producesModule("com.common:auth-api")
+    }
+}
+
+include ':spring-dynamicdq-lib'
+project(':spring-dynamicdq-lib').projectDir = new File('/Users/anton/Documents/Projects/iron-tech-space/spring-dynamicdq-lib')
+// /Volumes/Projects/iron-tech-space/spring-dynamicdq-lib
+
+//include ':auth-api'
+//project(':auth-api').projectDir = new File('/Users/anton/Documents/Projects/common/auth-api')
