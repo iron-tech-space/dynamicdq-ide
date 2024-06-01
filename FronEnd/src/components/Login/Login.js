@@ -3,6 +3,7 @@ import {Form, Input, Button, Checkbox, Alert} from 'antd';
 import {parseQueryParams} from "../../utils/baseUtils";
 import axios from "axios";
 import logo from '../../imgs/logo_.png';
+import {useDispatch} from "react-redux";
 
 const layout = {
     wrapperCol: { span: 24 },
@@ -16,6 +17,7 @@ const Login = props => {
     const {history} = props;
 
     const [isAuth, setIsAuth] = useState(undefined);
+    // const dispatch = useDispatch()
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -28,6 +30,7 @@ const Login = props => {
                 setIsAuth(true);
                 const data = res.data;
                 // console.log(history);
+                // dispatch(res.data);
                 if(data.redirect){
                     history.push(data.redirect)
                 }

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {SelectDataBase} from "./SelectDataBase";
 import {apiGetDataBases, apiPostReq, catchNotification} from "../../../../../apis/network";
 import {Button, Dropdown, Menu, notification, Select, Space, Tooltip} from "antd";
-import {FormBody, Modal, withStore} from "rt-design";
 import {DatabaseFilled, DeploymentUnitOutlined, ReloadOutlined, ToolOutlined} from "@ant-design/icons";
 import {StoreProps} from "rt-design/dist/components/core/wrappers";
 import moment from 'moment';
@@ -38,7 +37,7 @@ const Header = (props: StoreProps & {onChangeDataBase: (value: any) => void}) =>
     }
 
     const onClickMigrate = () => {
-        apiPostReq('/migrate-configs', {dataBaseSource: 'MI_DEV_121.117', dataBaseTarget: 'MI_DEMO_31.117', type: 'FULL'})
+        apiPostReq('/migrate-configs', {dataBaseSource: 'ASSD_DEV_121.73', dataBaseTarget: 'ASSD_2_PROD_121.80_10232', type: 'FULL'})
             .then(res => notification.success({message: `Успешная миграция`}) )
             .catch(err => notificationError(err, 'Ошибка миграции'))
     }
@@ -51,7 +50,7 @@ const Header = (props: StoreProps & {onChangeDataBase: (value: any) => void}) =>
     const toolsMenu = (
         <Menu onClick={onClickToolsMenu}>
             <Menu.Item key="0">
-                <Space><DeploymentUnitOutlined />Migrate configs 121.117 to 31.117</Space>
+                <Space><DeploymentUnitOutlined />Migrate configs ASSD_DEV_121.73 to ASSD_2_PROD_121.80_10232</Space>
             </Menu.Item>
         </Menu>
     );
@@ -63,11 +62,11 @@ const Header = (props: StoreProps & {onChangeDataBase: (value: any) => void}) =>
                 <Tooltip title={'Reload configs'}>
                     <Button size={"small"} type={"text"} icon={<ReloadOutlined/>} onClick={onClickReload}/>
                 </Tooltip>
-                <Dropdown overlay={toolsMenu} trigger={['click']}>
-                    <Tooltip title={'Tools'}>
-                        <Button size={"small"} type={"text"} icon={<ToolOutlined />} onClick={onClickReload}/>
-                    </Tooltip>
-                </Dropdown>
+                {/*<Dropdown overlay={toolsMenu} trigger={['click']}>*/}
+                {/*    <Tooltip title={'Tools'}>*/}
+                {/*        <Button size={"small"} type={"text"} icon={<ToolOutlined />} onClick={onClickReload}/>*/}
+                {/*    </Tooltip>*/}
+                {/*</Dropdown>*/}
                 <MigrateModal databases={databases}/>
             </div>
         </div>

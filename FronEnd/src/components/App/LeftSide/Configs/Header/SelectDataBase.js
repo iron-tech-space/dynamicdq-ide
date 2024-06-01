@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Dropdown, Menu, Select, Space, Tooltip} from "antd";
-import {apiGetDataBases, catchNotification} from "../../../../../apis/network";
 import {DatabaseFilled, ReloadOutlined, ToolOutlined, DeploymentUnitOutlined} from "@ant-design/icons";
-import {FormBody, Modal} from "rt-design";
 
 export const SelectDataBase = props => {
 

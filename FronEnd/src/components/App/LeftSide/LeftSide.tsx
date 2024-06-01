@@ -49,9 +49,9 @@ const LeftSide = ({SplitPaneProps, splitPaneSize, setSplitPaneSize}: LeftSidePro
             {/*<Tabs.TabPane tab={<span><CodeFilled style={{margin: '0 8px 0 0'}}/>SSH</span>} key="2" className={'app-page-tab'}>*/}
             {/*    <Ssh setRightPanelData={onClickTreeNodeHandler}/>*/}
             {/*</Tabs.TabPane>*/}
-            <Tabs.TabPane tab={<span><JiraIcon style={{margin: '0 8px 0 0'}}/>JIRA</span>} key="3" className={'app-page-tab'}>
-                <Jira setRightPanelData={onClickTreeNodeHandler}/>
-            </Tabs.TabPane>
+            {/*<Tabs.TabPane tab={<span><JiraIcon style={{margin: '0 8px 0 0'}}/>JIRA</span>} key="3" className={'app-page-tab'}>*/}
+            {/*    <Jira setRightPanelData={onClickTreeNodeHandler}/>*/}
+            {/*</Tabs.TabPane>*/}
             {/*<Tabs.TabPane tab={<span><TeamOutlined style={{marginTop: '0 8px 0 0'}}/>Пользователи</span>} key="20">*/}
             {/*    Users*/}
             {/*</Tabs.TabPane>*/}

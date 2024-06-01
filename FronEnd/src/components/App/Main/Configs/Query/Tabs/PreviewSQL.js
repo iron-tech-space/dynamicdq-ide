@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import SplitPane, {Size} from 'react-split-pane';
+import SplitPane from 'react-split-pane';
 import PreviewBase from "./PreviewBase";
-import {Layout, TextArea, Text} from "rt-design";
+import {Layout, TextArea} from "rt-design";
 import {Col, Row, Space} from "antd";
 
 const Sql = ({defaultFilter, requestLoadRows}) => {
@@ -32,7 +32,6 @@ const Sql = ({defaultFilter, requestLoadRows}) => {
     return (
         <Layout className={'preview-sql'}>
             <SplitPane
-                // className={'Catalog'} style={{width: '30%'}}
                 split='vertical'
                 minSize={'30%'}
                 maxSize={'70%'}
@@ -45,10 +44,6 @@ const Sql = ({defaultFilter, requestLoadRows}) => {
                     <TextArea value={data.sql}/>
                 </div>
             </SplitPane>
-
-            {/*<div style={{display: 'flex', height: '100%'}}>*/}
-            {/*   */}
-            {/*</div>*/}
         </Layout>
     )
 }

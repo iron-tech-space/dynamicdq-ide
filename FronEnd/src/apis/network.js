@@ -12,6 +12,7 @@ const instance = axios.create({
 });
 
 const catchHandler = (err) => {
+	// console.log('catchHandler', err.response)
 	if (err.response) {
 		// console.log("catchHandler error.response.data => ", err.response);
 		if (err.response.status === 401) {
@@ -70,7 +71,8 @@ export const requestLoadData = (url) => ({params, data}) =>
 	})
 
 export const catchNotification = (err) => {
-	console.error(err?.response?.data);
+	// console.error(err?.response?.data);
+	console.error(err);
 	notification.error({
 		message: 'Ошибка загрузки данных',
 		description: err?.response?.data?.error

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import SplitPane from "react-split-pane";
-import {Layout, TextArea, Space} from "rt-design";
+import {Space} from "rt-design";
 import {Row, Col, Select, Button, Input, Modal} from "antd";
 import {CodeFilled, ExclamationCircleOutlined} from "@ant-design/icons";
 import {ShellCommand} from "../../LeftSide/Ssh";

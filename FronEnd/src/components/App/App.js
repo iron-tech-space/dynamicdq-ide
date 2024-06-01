@@ -124,6 +124,7 @@ const App = () => {
 
 	/** ===================== Common states ====================== */
 	const [splitPaneSize, setSplitPaneSize] = useState(SplitPaneProps.defaultSize)
+	// const auth = useSelector((state) => state.auth);
 
 	const changePassword = () => {
 		axios.post("/api/users/change-password", {oldPassword: "admin", newPassword: "qwerty"})
@@ -138,7 +139,8 @@ const App = () => {
 				<Layout.Header className={'app-header'}>
 					<img src={logo} alt={"Logo"} className={'app-header-logo'}/>
 					<Space size={16}>
-						<span className={'app-header-version'}>v1.0.12</span>
+						{/*<span>{auth.username}</span>*/}
+						<span className={'app-header-version'}>v1.0.14</span>
 						<a href={'/logout'} className={'app-header-logout'}>
 							<LogOutIcon />
 							{/*<LogoutOutlined></LogoutOutlined>*/}

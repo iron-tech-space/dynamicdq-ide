@@ -14,6 +14,8 @@ import { AutoResizer } from "react-base-table";
 import {NODE_TYPE_ICONS, NODE_TYPES} from "../../App";
 import {uuid} from "../../../../utils/baseUtils";
 import {SqlIcon} from "../../../../imgs/icons";
+import {onSearchConfig} from "./onSearchConfig";
+import {copyTextToClipboard} from "../../../../utils/clipboardUtils";
 
 const listConfigsToTree = (list, parentKey, nodeType, dataBase) => {
     let roots = [], map = {}, i, node;
@@ -108,8 +110,10 @@ const TreeConfigs = props => {
 
     const {dataBase, setRightPanelData} = props;
 
+    const [searchValue, setSearchValue] = useState('');
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [treeData, setTreeData] = useState(undefined);
+    const [searchedTreeData, setSearchedTreeData] = useState(undefined);
 
     const positionUrls = {
         [NODE_TYPES.QUERY_CONFIG]: `/${dataBase.name}/configurations/query/position`,
@@ -120,6 +124,22 @@ const TreeConfigs = props => {
     useEffect(() => {
         loadConfigs().then(r => r);
     }, [dataBase]);
+
+    useEffect(() => {
+        if (searchValue.length > 0) {
+            setTimeout(() => {
+                const sv = new RegExp('.*' + searchValue.toLowerCase().replaceAll(' ', '.*') + '.*');
+                // console.log('sv', sv);
+                const [data, expanded] = onSearchConfig(treeData, sv);
+                console.log(data, expanded);
+                setSearchedTreeData(data);
+                setExpandedKeys(expanded);
+            }, 100);
+        } else {
+            setSearchedTreeData(treeData);
+        }
+        // const {} = searchValue.length > 0 ? onSearchConfig(treeData, searchValue.toLowerCase()) : treeData
+    }, [searchValue, treeData])
 
     const loadConfigs = async () => {
         if (dataBase && dataBase.name) {
@@ -290,6 +310,9 @@ const TreeConfigs = props => {
             case 'copyAs':
                 copyConfig(node);
                 break;
+            case 'copyName':
+                copyTextToClipboard(node.configName);
+                break;
             case 'remove':
                 removeConfig(node);
                 break;
@@ -402,11 +425,13 @@ const TreeConfigs = props => {
             menuItems.push(<Menu.Item key="addConfig">{NODE_TYPE_ICONS[node.type]}Создать конфиг</Menu.Item>)
             if([NODE_TYPES.QUERY_CONFIG, NODE_TYPES.SAVE_CONFIG, NODE_TYPES.FLOW_CONFIG].includes(node.type)) {
                 menuItems.push(<Menu.Item key="rename"><EditOutlined/>Переименовать</Menu.Item>)
+                menuItems.push(<Menu.Item key="copyName"><CopyOutlined/>Copy name</Menu.Item>);
                 menuItems.push(<Menu.Item key="removeGroup"><DeleteOutlined/>Удалить папку</Menu.Item>)
             }
         } else {
             menuItems.push(<Menu.Item key="rename"><EditOutlined/>Переименовать</Menu.Item>)
             menuItems.push(<Menu.Item key="copyAs"><CopyOutlined/>Дублировать конфиг</Menu.Item>);
+            menuItems.push(<Menu.Item key="copyName"><CopyOutlined/>Copy name</Menu.Item>);
             menuItems.push(<Menu.Item key="remove"><DeleteOutlined/>Удалить конфиг</Menu.Item>);
         }
         return (
@@ -464,11 +489,12 @@ const TreeConfigs = props => {
             return renderTreePlaceholder(height, width, ["Ошибка загрузки базы данных", "Выберите другую базу данных"])
         else if(treeData && treeData.length > 0) {
             return (
-                <div style={{ width: width, height: height, overflow: 'auto'}}>
+                <div style={{ width: width, height: height - 40, overflow: 'auto'}}>
                     <Tree
                         blockNode
                         showIcon={true}
-                        treeData={treeData}
+                        // treeData={treeData}
+                        treeData={searchedTreeData}
                         draggable={(nodeData) => [NODE_TYPES.QUERY_CONFIG, NODE_TYPES.SAVE_CONFIG, NODE_TYPES.FLOW_CONFIG].includes(nodeData.type)}
                         expandedKeys={expandedKeys}
                         onDrop={onDrop}
@@ -483,6 +509,16 @@ const TreeConfigs = props => {
 
     return (
         <div style={{height: '100%'}} >
+            <div style={{padding: '4px', borderBottom: '2px solid #f0f0f0'}}>
+                <Input
+                    bordered={false}
+                    className={'search'}
+                    placeholder="Search"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    allowClear={true}
+                />
+            </div>
             <AutoResizer>
                 {({height, width}) => (
                     renderTree(height, width)

@@ -14,7 +14,7 @@ import {RequestModel, ResponseModel} from "./FlowEditor/Node/Models/NetworkModel
 import {QueryConfigModel} from "./FlowEditor/Node/Models/QueryConfigModel";
 import {JsonListLengthModel, StringListLengthModel} from "./FlowEditor/Node/Models/ArrayModels";
 import {serializeDiagramToBack} from "./FlowEditor/SerializeDiagram";
-import {Form, Modal, FormBody, Input, Select, Button} from "rt-design";
+import {Form, FormBody, Button} from "rt-design";
 import {apiPostReq, catchNotification, requestLoadData} from "../../../../../apis/network";
 import TreeVariables from "./TreeVariables/TreeVariables";
 import {GetVariableModel, SetVariableModel} from "./FlowEditor/Node/Models/VariableModels";

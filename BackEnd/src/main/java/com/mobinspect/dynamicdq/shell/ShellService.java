@@ -8,7 +8,7 @@ import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.channel.ClientChannelEvent;
 import org.apache.sshd.client.session.ClientSession;
-import org.apache.sshd.common.channel.Channel
+import org.apache.sshd.common.channel.Channel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

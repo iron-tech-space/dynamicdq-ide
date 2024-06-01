@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/BackEnd" />
+    <file type="web" url="file://$PROJECT_DIR$/../spring-dynamicdq-lib" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="azul-1.8" project-jdk-type="JavaSDK" />
 </project>

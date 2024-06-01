@@ -6,7 +6,8 @@ import {
     Space,
     Tabs,
     Result,
-    notification, Collapse, Button, Spin
+    Input as AntInput,
+    notification, Collapse, Button, Spin, Popconfirm
 } from "antd";
 import {
     Form,
@@ -14,11 +15,8 @@ import {
     Input as RtInput,
     Checkbox as RtCheckBox,
     Custom,
-    Modal,
     Layout,
     TextArea,
-    Table,
-    RadioGroup
 } from "rt-design";
 import EditableTable, {validateValue} from "../../../../Base/EditableTable/EditableTable";
 import {columns} from "./queryFields";
@@ -28,11 +26,11 @@ import {
     FileSearchOutlined,
     ApiOutlined,
     ScheduleOutlined,
-    DatabaseOutlined, ReloadOutlined
+    DatabaseOutlined, ReloadOutlined, CopyOutlined, RiseOutlined
 } from "@ant-design/icons";
 import {
     apiPostReq,
-    catchNotification, requestLoadConfig,
+    catchNotification, genericRequest, requestLoadConfig,
 } from "../../../../../apis/network";
 import PreviewBase from "./Tabs/PreviewBase";
 import {ColumnIcon, SqlIcon, UsersIcon} from "../../../../../imgs/icons";
@@ -48,6 +46,8 @@ import {
 import ModalLoadFields from "./ModalLoadFields";
 import PreviewTable from "./Tabs/PreviewTable";
 import PreviewSQL from "./Tabs/PreviewSQL";
+import {copyTextToClipboard} from "../../../../../utils/clipboardUtils";
+import PopconfirmPushToPROD from "../Core/PopconfirmPushToPROD";
 
 const Input = ({span, name, label}) => {
     return <Col span={span} label={label}>
@@ -82,17 +82,9 @@ export const EditableTableItem = ({name, columns}) => (
             return (
                 <Layout style={{width: '100%'}}>
                     <EditableTable
-                        // rowKey={'name'}
                         columns={columns}
                         data={value}
-                        // data={data.fields}
                         onChange={onChange}
-                        // onChange={ (fields) => {
-                        //     // const _data = {...configData};
-                        //     // _data.fields = fields;
-                        //     // setConfigData(_data)
-                        //     console.log("onChange fields => ", fields)
-                        // }}
                     />
                 </Layout>
             );
@@ -160,15 +152,25 @@ const Query = props => {
 
     const onChangeCollapsePanel = (key) => {
         // console.log(key);
-        setVisibleGenInfo(key);
+        // setVisibleGenInfo(key);
     }
 
     const onClickCollapsePanelExtra = (e) => {
         e.stopPropagation();
         setLoaded(false);
     }
-    const CollapsePanelExtra = () =>
-        <Button size={"small"} icon={<ReloadOutlined/>} onClick={onClickCollapsePanelExtra}>Reload config</Button>
+
+    const CollapsePanelExtra = () => {
+        return (
+            <Space>
+                <PopconfirmPushToPROD configName={data.configName}>
+                    <Button size={"small"} icon={<RiseOutlined/>}>Push to PROD</Button>
+                </PopconfirmPushToPROD>
+                <Button size={"small"} icon={<ReloadOutlined/>} onClick={onClickCollapsePanelExtra}>Reload config</Button>
+                {/*<Button size={"small"} icon={<CopyOutlined />} onClick={() => copyTextToClipboard(data.configName)}>Copy name</Button>*/}
+            </Space>
+        )
+    }
 
     if(loaded)
     return (
@@ -182,7 +184,8 @@ const Query = props => {
             dispatch={{path: `query.config.${data.id}.form`}}
         >
             <FormBody noPadding={true}>
-                <Collapse activeKey={visibleGenInfo} onChange={onChangeCollapsePanel} bordered={false} ghost={true}>
+                {/*activeKey={visibleGenInfo} onChange={onChangeCollapsePanel}*/}
+                <Collapse bordered={false} ghost={true}>
                     <Collapse.Panel header={'Общая информация'} extra={<CollapsePanelExtra/>}
                                     className={'query-config-header'} key="qwerty">
                         <Row gutter={8}>

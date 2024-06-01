@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {apiGetReq, catchNotification, genericRequest} from "../../../apis/network";
 import {NODE_TYPES} from "../App";
-import {Button, Form} from 'rt-design';
+import {Button} from 'rt-design';
 import {Input, Space, Tree} from "antd";
 import {CodeFilled, FilterFilled} from "@ant-design/icons";
 import {JiraIcon} from "../../../imgs/icons";

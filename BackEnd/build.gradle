@@ -50,8 +50,8 @@ configurations.all {
 
 dependencies {
 	springBoot { buildInfo() }
-	compile project(":spring-dynamicdq-lib")
-//	implementation ('com.irontechspace:spring-dynamicdq-lib:0.0.32')
+//	compile project(":spring-dynamicdq-lib")
+	implementation ('com.irontechspace:spring-dynamicdq-lib:0.0.48')
 //	implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
 
 	// Для логов по ссылке

@@ -42,7 +42,7 @@ public class DataController {
 
     public enum QueryMode { flat, hierarchical, count, object, sql, sqlCount, save }
 
-    @ExecDuration(param = "configName")
+//    @ExecDuration(param = "configName")
     @PostMapping("/{dataSourceName}/data/{mode}/{configName}")
 //    @ApiOperation(value = "Получить данные по параметрам")
     public <T> T getFlatData(
@@ -74,7 +74,7 @@ public class DataController {
         // log.info("Mode: [{}] Config: [{}] Result.size: [{} rows]", mode.toString(), configName, result.size());
     }
 
-    @ExecDuration(param = "configName")
+//    @ExecDuration(param = "configName")
     @GetMapping("/{dataSourceName}/data/file/{configName}/{id}")
 //    @ApiOperation("Получить файл")
     public ResponseEntity<Resource> downloadFile(
@@ -86,9 +86,9 @@ public class DataController {
     }
 
 //    @ApiOperation("Загрузить новый файл")
-    @ExecDuration(param = "configName")
+//    @ExecDuration(param = "configName")
     @PostMapping(value = "/{dataSourceName}/data/save/file/{configName}", consumes = {"multipart/form-data"})
-    public ResponseEntity<Object> uploadFile(
+    public Object uploadFile(
             Authentication authentication,
             @PathVariable String configName,
             @RequestPart MultipartFile file,

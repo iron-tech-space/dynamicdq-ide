@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {EditableTableItem} from "./Query";
-import {Modal, Select, TreeSelect, FormBody} from "rt-design";
+import {Modal, TreeSelect, FormBody} from "rt-design";
 import {Col} from "./Query";
 import {apiGetReq, catchNotification, requestLoadConfig, requestLoadData} from "../../../../../apis/network";
 import {notificationError, uuid} from "../../../../../utils/baseUtils";

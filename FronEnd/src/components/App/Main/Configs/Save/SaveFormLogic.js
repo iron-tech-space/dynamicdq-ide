@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Input, Row, Col, Checkbox, Select, notification} from 'antd';
+import {Button, Input, Row, Col, Checkbox, Select, notification, Space} from 'antd';
 import objectPath from 'object-path';
 import {
 	ForkOutlined,
@@ -7,6 +7,8 @@ import {
 	InsertRowRightOutlined,
 	SisternodeOutlined,
 	CloseOutlined,
+	CaretUpOutlined,
+	CaretDownOutlined
 } from '@ant-design/icons';
 import {notificationError} from '../../../../../utils/baseUtils';
 import {apiGetReq} from "../../../../../apis/network";
@@ -87,8 +89,36 @@ const SaveFormLogic = (props) => {
 		onChange(newLogic);
 	};
 
+	const onClickUpField = (path, dir) => () => {
+		const lastIndex = path.at(-1);
+		const basePath = path.slice(0, path.length - 1);
+
+		let nextIndex = 0;
+		if (dir === 'up') {
+			if (lastIndex > 0) {
+				nextIndex = lastIndex - 1;
+			} else {
+				return;
+			}
+		} else if (dir === 'down') {
+			const maxLen = objectPath.get(logic, basePath).length - 1;
+			// console.log("down: ", lastIndex, maxLen)
+			if (lastIndex < maxLen) {
+				nextIndex = lastIndex + 1;
+			} else {
+				return;
+			}
+		}
+
+		let newLogic = {...logic};
+		const obj = objectPath.get(newLogic, path);
+		objectPath.del(newLogic, path);
+		objectPath.insert(newLogic, [...basePath], obj, nextIndex);
+		// console.log("basePath: ", basePath, "obj", obj)
+		onChange(newLogic);
+	}
 	const onClickDeleteField = (path) => {
-		// console.log("onClickDeleteField path => ", path);
+		console.log("onClickDeleteField path => ", path);
 		let newLogic = {...logic};
 		objectPath.del(newLogic, path);
 		onChange(newLogic);
@@ -199,14 +229,30 @@ const SaveFormLogic = (props) => {
 											]
 										</div>
 									</div>
-									<Button
-										size={'small'}
-										shape='circle'
-										icon={<CloseOutlined />}
-										onClick={() =>
-											onClickDeleteField(dataPath)
-										}
-									/>
+									<Space>
+										<Button
+											size={'small'}
+											shape='circle'
+											type={'text'}
+											icon={<CaretUpOutlined />}
+											onClick={onClickUpField(dataPath, 'up')}
+										/>
+										<Button
+											size={'small'}
+											shape='circle'
+											type={'text'}
+											icon={<CaretDownOutlined />}
+											onClick={onClickUpField(dataPath, 'down')}
+										/>
+										<Button
+											size={'small'}
+											shape='circle'
+											icon={<CloseOutlined />}
+											onClick={() =>
+												onClickDeleteField(dataPath)
+											}
+										/>
+									</Space>
 								</Div>
 							);
 						})}
@@ -268,7 +314,7 @@ const SaveFormLogic = (props) => {
 	};
 
 	const logicFields = (
-		<>
+		<Space direction={'vertical'} style={{width: '100%'}}>
 			<Row justify='center' align='middle' gutter={[0, 8]}>
 				<Col span={8}>
 					<span>Field type: </span>
@@ -310,9 +356,12 @@ const SaveFormLogic = (props) => {
 						style={{width: '100%'}}
 						onChange={(e) => onChangeInput('tableName', e)}
 						optionFilterProp="children"
-						filterOption={(input, option) =>
-							option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-						}
+						filterOption={(input, option) => {
+							// option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							const searchValue = new RegExp('.*' + input.toLowerCase().replaceAll(' ', '.*') + '.*');
+							const match = option.children.toLowerCase().match(searchValue);
+							return match !== null;
+						}}
 					>
 						{tableNames.map((table, index) => (
 							<Select.Option key={index} value={table}>
@@ -374,11 +423,31 @@ const SaveFormLogic = (props) => {
 					/>
 				</Col>
 			</Row>
-		</>
+		</Space>
 	);
 
+	const mapDBTypeToDynamic = {
+		uuid: 'uuid',
+		'character varying': 'text',
+		'timestamp with time zone': 'timestamp'
+		//
+	}
+
+	const getTypeValue = () => {
+		if (formData && formData.type) {
+			return formData.type
+		} else {
+			if (tableFields) {
+				console.log('fff formData.name', formData.name, tableFields, tableFields.find(t => t.columnName === formData.name))
+				// return mapDBTypeToDynamic[.dataType]
+				return 'text'
+			} else  {
+				return 'text'
+			}
+		}
+	}
 	const fieldsFields = (
-		<>
+		<Space direction={'vertical'} style={{width: '100%'}}>
 			<Row justify='center' align='middle' gutter={[0, 8]}>
 				<Col span={8}>
 					<span>name: </span>
@@ -387,7 +456,9 @@ const SaveFormLogic = (props) => {
 					<Select
 						value={formData && formData.name}
 						style={{width: '100%'}}
-						onChange={(e) => onChangeInput('name', e)}
+						onChange={(e) => {
+							onChangeInput('name', e);
+						}}
 					>
 						{tableFields.map((filed, index) => (
 							<Select.Option key={index} value={filed.columnName}>
@@ -429,18 +500,18 @@ const SaveFormLogic = (props) => {
 					{/*<Input value={formData && formData.type} onChange={(e) => onChangeInput('type', e)}/>*/}
 				</Col>
 			</Row>
-			<Row justify='center' align='middle' gutter={[0, 8]}>
-				<Col span={8}><span>validators: </span></Col>
-				<Col span={16}>
-					<Input
-						value={formData && formData.validators}
-						onChange={(e) =>
-							onChangeInput('validators', e.target.value)
-						}
-					/>
-				</Col>
-			</Row>
-		</>
+			{/*<Row justify='center' align='middle' gutter={[0, 8]}>*/}
+			{/*	<Col span={8}><span>validators: </span></Col>*/}
+			{/*	<Col span={16}>*/}
+			{/*		<Input*/}
+			{/*			value={formData && formData.validators}*/}
+			{/*			onChange={(e) =>*/}
+			{/*				onChangeInput('validators', e.target.value)*/}
+			{/*			}*/}
+			{/*		/>*/}
+			{/*	</Col>*/}
+			{/*</Row>*/}
+		</Space>
 	);
 
 	return (

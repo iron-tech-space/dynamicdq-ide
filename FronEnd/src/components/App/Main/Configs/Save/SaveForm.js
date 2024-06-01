@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {Form, Input, Button, notification, Row, Col, Space, Spin} from 'antd';
 import SaveFormLogic from './SaveFormLogic';
-import {Select} from 'rt-design';
-import {getParentPath, notificationError} from '../../../../../utils/baseUtils';
 import {apiPostReq, catchNotification, requestLoadConfig} from "../../../../../apis/network";
 import {
 	convertSharedForRolesStringToTable, convertSharedForRolesTableToString,
 	convertSharedForUsersStringToTable,
 	convertSharedForUsersTableToString, LargeModalArrayFields,
 } from "../Core/ModalArrayFields";
-import {ReloadOutlined} from "@ant-design/icons";
+import {CopyOutlined, ReloadOutlined, RiseOutlined} from "@ant-design/icons";
+import {copyTextToClipboard} from "../../../../../utils/clipboardUtils";
+import PopconfirmPushToPROD from "../Core/PopconfirmPushToPROD";
 
 const SaveForm = ({data}) => {
 
@@ -96,7 +96,7 @@ const SaveForm = ({data}) => {
 								</Form.Item>
 							</Space>
 						</Col>
-						<Col span={5}>
+						<Col span={3}>
 							<LargeModalArrayFields
 								id={data.id}
 								span={24}
@@ -108,7 +108,7 @@ const SaveForm = ({data}) => {
 								tableToString={convertSharedForUsersTableToString}
 							/>
 						</Col>
-						<Col span={5}>
+						<Col span={3}>
 							<LargeModalArrayFields
 								id={data.id}
 								span={24}
@@ -120,10 +120,14 @@ const SaveForm = ({data}) => {
 								tableToString={convertSharedForRolesTableToString}
 							/>
 						</Col>
-						<Col span={5}>
+						<Col span={9}>
 							{/*<Col span={24} style={{alignItems:'end', height: '100%' paddingBottom: '4px'}}>*/}
 								<Space style={{display: "flex", alignItems:'end', height: '100%', paddingBottom: '4px'}}>
+									<PopconfirmPushToPROD configName={data.configName}>
+										<Button icon={<RiseOutlined/>}>Push to PROD</Button>
+									</PopconfirmPushToPROD>
 									<Button icon={<ReloadOutlined/>} onClick={onClickReloadConfig}>Reload config</Button>
+									{/*<Button size={"small"} icon={<CopyOutlined />} onClick={() => copyTextToClipboard(data.configName)}>Copy name</Button>*/}
 									<Button htmlType='submit' style={{backgroundColor: '#8dd28d', width: '100%'}}>Сохранить</Button>
 								</Space>
 							{/*</Col>*/}

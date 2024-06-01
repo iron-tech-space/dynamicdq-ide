@@ -16,6 +16,8 @@ const TableStateContext = createContext({});
 
 const isEditing = (rowIndex, colIndex, state) =>
     state && state.editingCell.colIndex === colIndex && state.editingCell.rowIndex === rowIndex;
+const hasActiveEditing = (rowIndex, colIndex, state) =>
+    state && state.editingCell.colIndex && state.editingCell.rowIndex;
 const isSelectedCell = (rowIndex, colIndex, state) =>
     state && state.selectedCells.findIndex(cell => cell.colIndex === colIndex && cell.rowIndex === rowIndex) !== -1;
 const isSelectedRow = (rowIndex, state) =>
@@ -207,11 +209,13 @@ const BodyCell = ({rowIndex, rowData, colIndex, col, ...rest}) => {
         bordered: false,
         size: 'small'
     }
+    const _isEditing = isEditing(rowIndex, colIndex, state);
+    const hasEditing = hasActiveEditing(rowIndex, colIndex, state);
     if(colIndex === 0)
         cell = <CellIndex rowData={rowData} col={col}/>
     else if(col.component === 'checkbox')
-        cell = <CellCheckbox {...generalProps} rowIndex={rowIndex} colIndex={colIndex}/>
-    else if(isEditing(rowIndex, colIndex, state))
+        cell = <CellCheckbox {...generalProps} hasEditing={hasEditing} rowIndex={rowIndex} colIndex={colIndex}/>
+    else if(_isEditing)
         if(col.component === 'select')
             cell = <CellSelect {...generalProps} rowIndex={rowIndex} colIndex={colIndex} col={col}/>
         else
@@ -309,7 +313,7 @@ const CellInput = (props) => {
         /> )
 }
 
-const CellCheckbox = ({rowIndex, colIndex, ...rest}) => {
+const CellCheckbox = ({hasEditing, rowIndex, colIndex, ...rest}) => {
     const {onChangeInputWithSave, state} = useContext(TableStateContext);
     return (
         <Checkbox
@@ -317,6 +321,7 @@ const CellCheckbox = ({rowIndex, colIndex, ...rest}) => {
             ref={(checkbox) => {
                 isSelectedCell(rowIndex, colIndex, state) && checkbox && checkbox.focus()
             }}
+            disabled={hasEditing}
             onChange={e => onChangeInputWithSave(rowIndex, colIndex, e.target.checked)}
         /> )
 }
@@ -546,8 +551,10 @@ const EditableTable = (props) => {
                 // e.stopPropagation();
                 e.preventDefault();
             } else if((e.metaKey || e.ctrlKey) && e.keyCode === 67){
-                onCopyCells();
-                e.preventDefault();
+                if (!_isEditing) {
+                    onCopyCells();
+                    e.preventDefault();
+                }
                 // e.preventDefault();
             } else if((e.metaKey || e.ctrlKey) && e.keyCode === 86){
                 // onPasteCells();
@@ -715,13 +722,23 @@ const EditableTable = (props) => {
         }
     }
 
+    const defValues = {
+        align: 'left',
+        typeData: 'text',
+        typeField: 'column',
+        width: 100,
+        visible: true,
+        sortable: false,
+        resizable: false,
+    }
+
     const onAddRow = (rowIndex) => {
         const newRow = {};
         if(data.length > 0) {
             for (let key in data[0])
-                newRow[key] = null;
+                newRow[key] = defValues[key] ? defValues[key] : null;
         } else {
-            columns.forEach(col => newRow[col.dataKey] = null)
+            columns.forEach(col => newRow[col.dataKey] = defValues[col.dataKey] ? defValues[col.dataKey] : null)
         }
 
         let arr = [...data];

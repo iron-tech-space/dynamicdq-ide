@@ -85,7 +85,7 @@ public class ConfigurationController {
         return queryConfigService.getAll(dataSources.getDataSource(dataSourceName), Auth.getUserId(authentication), Auth.getListUserRoles(authentication));
     }
     /** Получить конфигурацию запросов по именю */
-    @ExecDuration(param = "configName")
+//    @ExecDuration(param = "configName")
     @GetMapping("/{dataSourceName}/configurations/query/{configName}")
     public QueryConfig getQueryConfigByName(@PathVariable String dataSourceName, @PathVariable String configName, Authentication authentication) {
         return queryConfigService.getByName(dataSources.getDataSource(dataSourceName), configName, Auth.getUserId(authentication), Auth.getListUserRoles(authentication));
